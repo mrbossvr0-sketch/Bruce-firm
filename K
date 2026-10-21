@@ -1,0 +1,34 @@
+name: Build Bruce Shark Flipper firmware
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+jobs:
+  firmware:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    steps:
+      - name: Checkout Bruce Shark source overlay
+        uses: actions/checkout@v4
+      - name: Checkout official Flipper firmware
+        uses: actions/checkout@v4
+        with:
+          repository: flipperdevices/flipperzero-firmware
+          # The integration is written against this upstream revision.
+          ref: d8dfb3147c31c25fe2b69c4a4eed1c04451fa30e
+          submodules: recursive
+          path: upstream
+      - name: Apply native desktop firmware changes
+        run: python3 apply_overlay.py upstream
+      - name: Build flashable firmware updater
+        working-directory: upstream
+        run: ./fbt COMPACT=1 DEBUG=0 updater_package
+      - name: Publish .tgz update package and .dfu artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Bruce-Shark-Flipper-Zero-Firmware
+          if-no-files-found: error
+          path: |
+            upstream/dist/**/*.tgz
+            upstream/dist/**/*.dfu
+            upstream/build/**/*.dfu
