@@ -55,7 +55,7 @@ typedef struct {
 } BruceCategory;
 
 #define ITEM(t, a, x, msg) {t, a, x, msg}
-#define CAT(n, arr) {n, arr, sizeof(arr) / sizeof(arr[0])}
+#define BRUCE_CAT(n, arr) {n, arr, sizeof(arr) / sizeof(arr[0])}
 
 static const BruceItem wifi_items[] = {
     ITEM("WiFi hardware", BruceInfoAction, NULL, "Needs ESP32 WiFi board"),
@@ -114,10 +114,10 @@ static const BruceItem config_items[] = {
 };
 
 static const BruceCategory bruce_categories[BRUCE_CATEGORIES] = {
-    CAT("WiFi", wifi_items), CAT("BLE", ble_items), CAT("RF", rf_items),
-    CAT("NFC", nfc_items), CAT("RFID", rfid_items), CAT("IR", ir_items),
-    CAT("iButton", ibutton_items), CAT("USB", usb_items), CAT("GPIO", gpio_items),
-    CAT("Files", files_items), CAT("Others", tools_items), CAT("Config", config_items),
+    BRUCE_CAT("WiFi", wifi_items), BRUCE_CAT("BLE", ble_items), BRUCE_CAT("RF", rf_items),
+    BRUCE_CAT("NFC", nfc_items), BRUCE_CAT("RFID", rfid_items), BRUCE_CAT("IR", ir_items),
+    BRUCE_CAT("iButton", ibutton_items), BRUCE_CAT("USB", usb_items), BRUCE_CAT("GPIO", gpio_items),
+    BRUCE_CAT("Files", files_items), BRUCE_CAT("Others", tools_items), BRUCE_CAT("Config", config_items),
 };
 
 typedef struct {
